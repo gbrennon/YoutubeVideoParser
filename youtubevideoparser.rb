@@ -24,7 +24,9 @@ class YoutubeVideoParser
     end
 
     XPath.each(@doc, '//media:player') do |video|
-      videopath << video.attribute('url')
+      video = video.attribute('url')
+      video = String(video).split('url')
+      videopath << video[0]
     end
 
     @video = Hash[videotitle.zip(videopath)]
