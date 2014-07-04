@@ -17,4 +17,4 @@ y = YoutubeVideoParser.new('Confreaks', 10)
 y.listvideos
 ```
 
-This will return an array of 10 RXML::Element
+This will return an Hash of (title => url)
