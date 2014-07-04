@@ -3,12 +3,12 @@ require 'rexml/document'
 include REXML
 
 class YoutubeVideoParser
-  attr_reader :user, :video, :num
+  attr_reader :user, :video, :result
 
-  def initialize(user, num)
+  def initialize(user, result)
     @user = user
-    @num = num
-    @url_base = "http://gdata.youtube.com/feeds/api/users/#{@user}/uploads?max-results=#{@num}"
+    @result = result
+    @url_base = "http://gdata.youtube.com/feeds/api/users/#{@user}/uploads?max-results=#{@result}"
     @xml = Net::HTTP.get_response(URI.parse(@url_base)).body
     @doc = REXML::Document.new(@xml)
   end
@@ -16,17 +16,16 @@ class YoutubeVideoParser
   def listvideo
     videopath = Array.new
     videotitle = Array.new
-
     XPath.each(@doc, '//media:title')  do |title| 
-      title = String(title).split('>')
-      title = title[1].split('<')
-      videotitle << title[0]
+      videotitle << title
     end
 
     XPath.each(@doc, '//media:player') do |video|
       videopath << video.attribute('url')
     end
-
-    @video = Hash[videotitle.zip(videopath)]
+    puts videotitle.class
   end
 end
+
+y = YoutubeVideoParser.new('glauberbrennon', 1)
+puts y.listvideo 
