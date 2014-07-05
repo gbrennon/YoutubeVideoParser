@@ -31,9 +31,6 @@ class YoutubeVideoParser
   def get_paths
     video_paths = Array.new
     XPath.each(@doc, '//media:player') do |video|
-      video = video.attribute('url')
-      video = String(video).split('url')
-      videopath << video[0]
       video_paths << video.attribute('url').to_s
     end
     video_paths
