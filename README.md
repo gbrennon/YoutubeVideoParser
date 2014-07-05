@@ -13,8 +13,8 @@ Example, parse Confreaks channel and return the last 10:
 ```ruby
 require_relative 'youtubevideoparser'
 
-y = YoutubeVideoParser.new('Confreaks', 10)
-y.listvideos
+yvp = YoutubeVideoParser.new('Confreaks', 10)
+yvp.video_list
 ```
 
 This will return an Hash of (title => url)
