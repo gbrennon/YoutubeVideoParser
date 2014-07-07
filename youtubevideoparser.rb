@@ -7,6 +7,7 @@ class YoutubeVideoParser
   def initialize(user, num)
     url_base = "http://gdata.youtube.com/feeds/api/users/#{user}/uploads?max-results=#{num}"
     xml = Net::HTTP.get_response(URI.parse(url_base)).body
+    check_channel(xml)
     @doc = REXML::Document.new(xml)
   end
 
@@ -34,5 +35,13 @@ class YoutubeVideoParser
       video_paths << video.attribute('url').to_s
     end
     video_paths
+  end
+
+  def check_channel(xml)
+    if xml == 'User not found'
+        raise ArgumentError, xml
+    elsif
+      xml
+    end
   end
 end
